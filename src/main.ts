@@ -7,9 +7,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  
   const config = new DocumentBuilder()
-    .setTitle('Extension Project')
+    .setTitle('TechSolutions')
     .setDescription('API TechSolutions')
     .setVersion('1.0')
     .build();
@@ -19,7 +19,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  // Exportar a documentação do Swagger em formato JSON
   const swaggerJson = JSON.stringify(document);
   writeFileSync(join(__dirname, '../swagger.json'), swaggerJson);
 

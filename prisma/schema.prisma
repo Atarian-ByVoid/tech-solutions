@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  username  String
-  email     String @unique
-  password  String
-  firstName String
-  address   String
+  id       Int    @id @default(autoincrement())
+  username String
+  email    String @unique
+  password String
+  name     String
+  address  String
 
   orders  Order[]
   reviews ProductReview[]
@@ -26,7 +26,7 @@ model Product {
   id          Int         @id @default(autoincrement())
   name        String
   description String
-  price       Decimal
+  price       String
   stock       Int
   orderItems  OrderItem[]
 }

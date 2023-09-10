@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional, OmitType } from "@nestjs/swagger";
 import { IsString, IsEmail } from "class-validator";
 import { OrderDTO } from "src/order/dtos/order.dto";
 import { ProductReviewDTO } from "src/product/dto/product-review.dto";
@@ -24,10 +24,14 @@ export class UserDTO {
   @IsString()
   address: string;
 
-
-  @ApiProperty({ type: [OrderDTO] })
+  @ApiPropertyOptional({ type: [OrderDTO] })
   orders: OrderDTO[];
 
-  @ApiProperty({ type: [ProductReviewDTO] })
+  @ApiPropertyOptional({ type: [ProductReviewDTO] })
   reviews: ProductReviewDTO[];
 }
+
+
+export class CreateUserDTO extends OmitType(UserDTO,['reviews','orders']){}
+export class UpdateUserDTO extends OmitType(UserDTO,['reviews','orders']){}
+
