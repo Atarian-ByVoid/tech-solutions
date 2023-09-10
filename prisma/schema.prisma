@@ -16,7 +16,6 @@ model User {
   email     String @unique
   password  String
   firstName String
-  lastName  String
   address   String
 
   orders  Order[]
