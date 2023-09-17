@@ -19,7 +19,5 @@ export class JWTPayloadDTO extends PickType(UserDTO, ['id', 'email']) {
 
     this.id = user.id;
     this.email = user.email;
-    
-    
   }
 }

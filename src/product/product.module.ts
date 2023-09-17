@@ -7,7 +7,7 @@ import { ProductReviewController } from './product-review/product-review.control
 import { ProductReviewService } from './product-review/product-review.service';
 
 @Module({
-  controllers: [ProductController,ProductReviewController],
+  controllers: [ProductController, ProductReviewController],
   providers: [ProductService, PrismaService, ProductReviewService],
   imports: [PrismaModule],
 })

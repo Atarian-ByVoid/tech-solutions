@@ -8,14 +8,11 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ProductService } from '../product.service';
 import {
   CreateProductReviewDTO,
-  ProductReviewDTO,
   UpdateProductReviewDTO,
 } from '../dto/product-review.dto';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { ProductReview } from '@prisma/client';
 import { ProductReviewService } from './product-review.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 

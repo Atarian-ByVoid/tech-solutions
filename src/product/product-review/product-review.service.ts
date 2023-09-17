@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateProductReviewDTO, UpdateProductReviewDTO } from '../dto/product-review.dto';
+import {
+  CreateProductReviewDTO,
+  UpdateProductReviewDTO,
+} from '../dto/product-review.dto';
 
 @Injectable()
 export class ProductReviewService {
@@ -10,7 +13,9 @@ export class ProductReviewService {
     data: CreateProductReviewDTO,
   ): Promise<CreateProductReviewDTO> {
     const { userId, productId, rating, comment } = data;
-    const user = await this.prismaService.user.findUnique({ where: { id: userId } });
+    const user = await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
     const product = await this.prismaService.product.findUnique({
       where: { id: productId },
     });

@@ -13,7 +13,6 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDTO } from './user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 
-
 @ApiSecurity('bearer')
 @UseGuards(JwtAuthGuard)
 @ApiTags('Users')

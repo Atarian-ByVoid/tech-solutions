@@ -37,12 +37,23 @@ export class ProductService {
       );
     }
   }
+  async findAll(page: number, pageSize: number) {
+    const skip = (page - 1) * pageSize;
 
-  async findAll() {
-    const dataTasks = await this.prisma.product.findMany({});
+    const [data, total] = await Promise.all([
+      this.prisma.product.findMany({
+        skip,
+        take: pageSize,
+      }),
+      this.prisma.product.count(),
+    ]);
+
     return {
       statusCode: 200,
-      data: dataTasks,
+      data,
+      page,
+      pageSize,
+      totalItems: total,
     };
   }
 
@@ -99,6 +110,4 @@ export class ProductService {
       ...updatedUser,
     };
   }
-
-
 }

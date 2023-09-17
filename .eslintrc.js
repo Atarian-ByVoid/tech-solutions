@@ -5,6 +5,10 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
+  plugins: ['import'],
+  rules: {
+    'import/no-unused-modules': ['error', { unusedExports: true }],
+  },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
     'plugin:@typescript-eslint/recommended',

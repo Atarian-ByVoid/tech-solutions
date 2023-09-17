@@ -46,48 +46,6 @@ export class AuthService {
     }
   }
 
-  // async login(loginDto: AuthUserDTO): Promise<BearerTokenDTO> {
-  //   try {
-  //     const { email, password } = loginDto;
-
-  //     const user = await this.prismaService.user.findUnique({
-  //       where: {
-  //         email,
-  //       },
-  //     });
-
-  //     if (!user) {
-  //       throw new BadRequestException(
-  //         'Não foi possível encontrar um usuario cadastrado com esse email',
-  //       );
-  //     }
-
-  //     const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  //     if (!isPasswordValid) {
-  //       throw new UnauthorizedException('Credenciais inválidas');
-  //     }
-
-  //     const payload = {
-  //       email: user.email,
-  //       id: user.id,
-  //     };
-
-  //     const bearerToken = this.jwtService.sign(payload);
-
-  //     const responseDto: BearerTokenDTO = {
-  //       bearerToken,
-  //     };
-
-  //     return responseDto;
-  //   } catch (error) {
-  //     throw new UnauthorizedException(
-  //       'Erro ao efetuar o login: ' + error.message,
-  //     );
-  //   }
-  // }
-
-
   async login(body: AuthUserDTO) {
     const payload = {
       email: body.email,
@@ -107,7 +65,10 @@ export class AuthService {
 
     const secretKey = 'void';
 
-    return this.jwtService.sign({ ...payload, sub: user.id }, { secret: secretKey });
+    return this.jwtService.sign(
+      { ...payload, sub: user.id },
+      { secret: secretKey },
+    );
   }
 
   async validateUser(payload: any): Promise<User | null> {

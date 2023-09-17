@@ -14,8 +14,6 @@ import { User } from '@prisma/client';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  
-
   async findAll() {
     const dataTasks = await this.prisma.user.findMany({});
     return {
