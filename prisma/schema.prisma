@@ -23,12 +23,13 @@ model User {
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
-  name        String
-  description String
-  price       String
-  stock       Int
-  orderItems  OrderItem[]
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String
+  price         String
+  stock         Int
+  orderItems    OrderItem[]
+  ProductReview ProductReview[]
 }
 
 model Order {
@@ -57,4 +58,5 @@ model ProductReview {
   rating    Int
   comment   String?
   User      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }

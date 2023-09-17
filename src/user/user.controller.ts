@@ -5,28 +5,21 @@ import {
   Get,
   NotFoundException,
   Param,
-  Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './user.service';
-import { CreateUserDTO, UpdateUserDTO } from './user.dto';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { parseString } from 'xml2js';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { UpdateUserDTO } from './user.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 
-@Controller('users')
+
+@ApiSecurity('bearer')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Users')
+@Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
-
-  @Post()
-  async createUser(@Body() createUserDto: CreateUserDTO) {
-    try {
-      const result = await this.userService.createUser(createUserDto);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
 
   @Get()
   async findAll() {
@@ -66,6 +59,4 @@ export class UsersController {
       throw error;
     }
   }
-
-
 }

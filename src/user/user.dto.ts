@@ -1,9 +1,16 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from "@nestjs/swagger";
-import { IsString, IsEmail } from "class-validator";
+import { Type } from "class-transformer";
+import { IsString, IsEmail, IsInt, IsNotEmpty } from "class-validator";
 import { OrderDTO } from "src/order/dtos/order.dto";
 import { ProductReviewDTO } from "src/product/dto/product-review.dto";
 
 export class UserDTO {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  @Type(() => Number)
+  id: number;
+  
   @ApiProperty()
   @IsString()
   username: string;
@@ -32,6 +39,6 @@ export class UserDTO {
 }
 
 
-export class CreateUserDTO extends OmitType(UserDTO,['reviews','orders']){}
-export class UpdateUserDTO extends OmitType(UserDTO,['reviews','orders']){}
+export class CreateUserDTO extends OmitType(UserDTO,['reviews','orders','id']){}
+export class UpdateUserDTO extends OmitType(UserDTO,['reviews','orders','id']){}
 

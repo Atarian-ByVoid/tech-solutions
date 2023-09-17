@@ -5,6 +5,10 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDTO, UpdateProductDTO } from './dto/product.dto';
+import {
+  CreateProductReviewDTO,
+  ProductReviewDTO,
+} from './dto/product-review.dto';
 
 @Injectable()
 export class ProductService {
@@ -95,4 +99,6 @@ export class ProductService {
       ...updatedUser,
     };
   }
+
+
 }

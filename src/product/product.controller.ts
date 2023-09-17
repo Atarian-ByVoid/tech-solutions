@@ -7,14 +7,21 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDTO, UpdateProductDTO } from './dto/product.dto';
 import { UpdateUserDTO } from 'src/user/user.dto';
-import { ApiTags } from '@nestjs/swagger';
-
-@Controller('product')
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  CreateProductReviewDTO,
+  ProductReviewDTO,
+} from './dto/product-review.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+@ApiSecurity('bearer')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Product')
+@Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
