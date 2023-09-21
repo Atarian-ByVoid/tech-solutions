@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -31,9 +32,12 @@ export class ProductReviewController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
     try {
-      return await this.prodcutReviewService.findAll();
+      return await this.prodcutReviewService.findAll(page,pageSize);
     } catch (error) {
       throw error;
     }

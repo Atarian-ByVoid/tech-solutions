@@ -1,0 +1,2 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('INATIVO', 'ATIVO', 'EM_ANDAMENTO', 'CONCLUIDO');

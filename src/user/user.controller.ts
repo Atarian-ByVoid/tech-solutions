@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './user.service';
@@ -21,9 +22,12 @@ export class UsersController {
   constructor(private userService: UsersService) {}
 
   @Get()
-  async findAll() {
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
     try {
-      return await this.userService.findAll();
+      return await this.userService.findAll(page,pageSize);
     } catch (error) {
       throw error;
     }

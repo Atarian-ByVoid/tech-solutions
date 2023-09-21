@@ -1,10 +1,11 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, NotFoundException, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from 'src/user/user.dto';
 import {
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthUserDTO } from './auth.dto';
+import { AuthUserDTO, UpdateRoleDTO } from './auth.dto';
+import { Role } from '@prisma/client';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -20,9 +21,7 @@ export class AuthController {
       throw error;
     }
   }
-
-
-
+  
   @Post('login')
   async login(@Body() authUserDTO: AuthUserDTO) {
     try {
@@ -31,5 +30,16 @@ export class AuthController {
     } catch (error) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
+  }
+
+  @Put(':id/update-role')
+  async updateUserRole(@Param('id') id: number, @Body() updateRoleDto: UpdateRoleDTO) {
+    const updatedUser = await this.authService.updateUserRole(id, updateRoleDto.role);
+
+    if (!updatedUser) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+
+    return updatedUser;
   }
 }

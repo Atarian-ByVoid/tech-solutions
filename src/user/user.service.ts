@@ -14,11 +14,23 @@ import { User } from '@prisma/client';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
-    const dataTasks = await this.prisma.user.findMany({});
+  async findAll(page: number, pageSize: number) {
+    const skip = (page - 1) * pageSize;
+
+    const [data, total] = await Promise.all([
+      this.prisma.user.findMany({
+        skip,
+        take: pageSize,
+      }),
+      this.prisma.user.count(),
+    ]);
+
     return {
       statusCode: 200,
-      data: dataTasks,
+      data,
+      page,
+      pageSize,
+      totalItems: total,
     };
   }
 

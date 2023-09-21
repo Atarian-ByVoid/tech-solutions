@@ -16,17 +16,21 @@ import {
   ApiSecurity,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+import { Role } from '@prisma/client';
+import { Roles } from 'src/auth/decorators/roles.decorators';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @ApiSecurity('bearer')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard,RolesGuard)
 @ApiTags('Inventory')
+@Roles(Role.ADMIN)
 @Controller('inventory')
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
-  @Post('/import/empresa')
+  @Post('/import')
   @ApiConsumes('multipart/form-data')
-  @ApiOperation({ summary: 'Importa empresas por planilha' })
+  @ApiOperation({ summary: 'Importa produtos por planilha' })
   @ApiBody({
     schema: {
       type: 'object',
@@ -44,4 +48,5 @@ export class InventoryController {
   async upload(@UploadedFile() file: Express.Multer.File) {
     return this.inventoryService.parse(file);
   }
+
 }

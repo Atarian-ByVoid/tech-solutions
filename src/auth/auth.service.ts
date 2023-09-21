@@ -2,13 +2,14 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDTO } from 'src/user/user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthUserDTO, BearerTokenDTO } from './auth.dto';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
@@ -29,7 +30,6 @@ export class AuthService {
       const user = await this.prismaService.user.create({
         data: createUserInput,
       });
-      console.log(createUserDto);
 
       return {
         statusCode: 200,
@@ -65,6 +65,10 @@ export class AuthService {
 
     const secretKey = 'void';
 
+    if (user.role) {
+      payload['role'] = user.role;
+    }
+
     return this.jwtService.sign(
       { ...payload, sub: user.id },
       { secret: secretKey },
@@ -88,4 +92,19 @@ export class AuthService {
       );
     }
   }
+
+  async updateUserRole(userId: number, newRole: Role): Promise<User | null> {
+    try {
+      const updatedUser = await this.prismaService.user.update({
+        where: { id: userId },
+        data: { role: newRole },
+      });
+
+      return updatedUser;
+    } catch (error) {
+      console.error('Erro ao atualizar o papel do usuário:', error);
+      throw new NotFoundException('Erro ao atualizar o papel do usuário.');
+    }
+  }
+
 }

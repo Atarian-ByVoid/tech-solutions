@@ -35,11 +35,22 @@ export class ProductReviewService {
     return productReview;
   }
 
-  async findAll() {
-    const dataTasks = await this.prismaService.productReview.findMany({});
+  async findAll(page: number, pageSize: number) {
+    const skip = (page - 1) * pageSize;
+
+    const [data, total] = await Promise.all([
+      this.prismaService.productReview.findMany({
+        skip,
+        take: pageSize,
+      }),
+      this.prismaService.productReview.count(),
+    ]);
     return {
       statusCode: 200,
-      data: dataTasks,
+      data,
+      page,
+      pageSize,
+      totalItems: total,
     };
   }
 

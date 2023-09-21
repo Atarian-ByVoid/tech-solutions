@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsString, IsEmail, IsInt, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsInt, IsNotEmpty, IsEnum } from 'class-validator';
 import { OrderDTO } from 'src/order/dtos/order.dto';
 import { ProductReviewDTO } from 'src/product/dto/product-review.dto';
 
@@ -36,15 +37,24 @@ export class UserDTO {
 
   @ApiPropertyOptional({ type: [ProductReviewDTO] })
   reviews: ProductReviewDTO[];
+
+  @ApiProperty({
+    type: Role,
+    enum: Role,
+  })
+  @IsEnum(Role)
+  role: Role;
 }
 
 export class CreateUserDTO extends OmitType(UserDTO, [
   'reviews',
   'orders',
   'id',
+  'role'
 ]) {}
 export class UpdateUserDTO extends OmitType(UserDTO, [
   'reviews',
   'orders',
   'id',
+  'role'
 ]) {}

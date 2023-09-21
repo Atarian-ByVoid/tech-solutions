@@ -1,5 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,6 +8,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  INATIVO
+  ATIVO
+  EM_ANDAMENTO
+  CONCLUIDO
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   username String
@@ -17,6 +27,7 @@ model User {
   password String
   name     String
   address  String
+  role     Role   @default(USER)
 
   orders  Order[]
   reviews ProductReview[]
@@ -35,7 +46,7 @@ model Product {
 model Order {
   id         Int         @id @default(autoincrement())
   userId     Int
-  status     String
+  status     Status      @default(EM_ANDAMENTO)
   orderItems OrderItem[]
   User       User        @relation(fields: [userId], references: [id])
 }

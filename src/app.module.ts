@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { InventoryModule } from './inventory/inventory.module';
+import { OrderService } from './order/order.service';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { InventoryModule } from './inventory/inventory.module';
     OrderModule,
     InventoryModule,
   ],
-  controllers: [AuthController, OrderController, ProductReviewController],
+  controllers: [AuthController, ProductReviewController],
   providers: [
     AuthService,
     ProductService,
