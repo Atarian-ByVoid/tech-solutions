@@ -31,6 +31,8 @@ model User {
 
   orders  Order[]
   reviews ProductReview[]
+
+  @@map("users")
 }
 
 model Product {
@@ -41,6 +43,8 @@ model Product {
   stock         Int
   orderItems    OrderItem[]
   ProductReview ProductReview[]
+
+  @@map("porducts")
 }
 
 model Order {
@@ -49,6 +53,8 @@ model Order {
   status     Status      @default(EM_ANDAMENTO)
   orderItems OrderItem[]
   User       User        @relation(fields: [userId], references: [id])
+
+  @@map("orders")
 }
 
 model OrderItem {
@@ -60,6 +66,8 @@ model OrderItem {
 
   product Product @relation(fields: [productId], references: [id])
   Order   Order   @relation(fields: [orderId], references: [id])
+
+  @@map("order_item")
 }
 
 model ProductReview {
@@ -70,4 +78,9 @@ model ProductReview {
   comment   String?
   User      User    @relation(fields: [userId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
+
+    @@map("product_review")
+
+
+  
 }

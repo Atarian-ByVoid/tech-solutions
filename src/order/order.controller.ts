@@ -55,12 +55,12 @@ export class OrderController {
   }
 
   @Delete(':id')
-  async deleteProduct(@Param('id') id: string) {
+  async deleteOrder(@Param('id') id: string) {
     return await this.orderService.deleteOrder(+id);
   }
 
   @Put(':id')
-  async updateUser(
+  async updateOrder(
     @Param('id') id: string,
     @Body() updateOrderDTO: UpdateOrderDTO,
   ) {

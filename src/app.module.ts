@@ -15,6 +15,7 @@ import { UsersService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { InventoryModule } from './inventory/inventory.module';
 import { OrderService } from './order/order.service';
+import { OrderItemModule } from './order-item/order-item.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { OrderService } from './order/order.service';
     AuthModule,
     OrderModule,
     InventoryModule,
+    OrderItemModule,
   ],
   controllers: [AuthController, ProductReviewController],
   providers: [

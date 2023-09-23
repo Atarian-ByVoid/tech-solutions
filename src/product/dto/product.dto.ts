@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
-import { OrderItemDTO } from 'src/order/dtos/order-item.dto';
+import { OrderItemDTO } from 'src/order-item/dto/order-item.dto';
 
 export class ProductDTO {
   @ApiProperty()
