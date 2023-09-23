@@ -12,7 +12,7 @@ export class InventoryService {
       file.mimetype !==
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
-      throw new BadRequestException('só é possível importar por xlsx');
+      throw new BadRequestException('Só é possível importar por xlsx');
     }
 
     const workbook = new Workbook();
