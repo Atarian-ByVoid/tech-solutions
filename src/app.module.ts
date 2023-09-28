@@ -1,21 +1,19 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { UsersModule } from './user/user.module';
-import { ProductModule } from './product/product.module';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
-import { AuthModule } from './auth/auth.module';
-import { OrderModule } from './order/order.module';
-import { OrderController } from './order/order.controller';
-import { ProductReviewController } from './product/product-review/product-review.controller';
-import { ProductService } from './product/product.service';
-import { PrismaService } from './prisma/prisma.service';
-import { ProductReviewService } from './product/product-review/product-review.service';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UsersService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 import { InventoryModule } from './inventory/inventory.module';
-import { OrderService } from './order/order.service';
 import { OrderItemModule } from './order-item/order-item.module';
+import { OrderModule } from './order/order.module';
+import { PrismaService } from './prisma/prisma.service';
+import { ProductReviewController } from './product/product-review/product-review.controller';
+import { ProductReviewService } from './product/product-review/product-review.service';
+import { ProductModule } from './product/product.module';
+import { ProductService } from './product/product.service';
+import { UsersModule } from './user/user.module';
+import { UsersService } from './user/user.service';
 
 @Module({
   imports: [
@@ -37,4 +35,4 @@ import { OrderItemModule } from './order-item/order-item.module';
     JwtService,
   ],
 })
-export class AppModule {}
+export class AppModule { }

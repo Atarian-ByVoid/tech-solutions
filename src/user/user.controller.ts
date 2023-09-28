@@ -9,17 +9,19 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './user.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { UpdateUserDTO } from './user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+import { UpdateUserDTO } from './user.dto';
+import { UsersService } from './user.service';
 
 @ApiSecurity('bearer')
 @UseGuards(JwtAuthGuard)
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService) {
+
+  }
 
   @Get()
   async findAll(
@@ -27,7 +29,7 @@ export class UsersController {
     @Query('pageSize') pageSize: number = 10,
   ) {
     try {
-      return await this.userService.findAll(page,pageSize);
+      return await this.userService.findAll(page, pageSize);
     } catch (error) {
       throw error;
     }
