@@ -1,27 +1,27 @@
 import {
   Controller,
   Post,
-  UseInterceptors,
   UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
-import { InventoryService } from './inventory.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
-  ApiConsumes,
-  ApiOperation,
   ApiBody,
+  ApiConsumes,
   ApiCreatedResponse,
-  ApiTags,
+  ApiOperation,
   ApiSecurity,
+  ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 import { Role } from '@prisma/client';
 import { Roles } from 'src/auth/decorators/roles.decorators';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { InventoryService } from './inventory.service';
 
 @ApiSecurity('bearer')
-@UseGuards(JwtAuthGuard,RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Inventory')
 @Roles(Role.ADMIN)
 @Controller('inventory')
@@ -43,10 +43,9 @@ export class InventoryController {
       required: ['file'],
     },
   })
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({ description: 'Produtos importados com sucesso' })
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile() file: Express.Multer.File) {
     return this.inventoryService.parse(file);
   }
-
 }

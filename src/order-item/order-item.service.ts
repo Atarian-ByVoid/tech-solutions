@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
-import { CreateOrderItemDTO, UpdateOrderItemDTO } from "./dto/order-item.dto";
-import { Decimal } from "@prisma/client/runtime/library";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Decimal } from '@prisma/client/runtime/library';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateOrderItemDTO, UpdateOrderItemDTO } from './dto/order-item.dto';
 
 @Injectable()
 export class OrderItemService {
@@ -112,7 +112,6 @@ export class OrderItemService {
     return {
       ...updatedUser,
       unitPrice: updateOrderItemDTO.unitPrice.toString(),
-      
     };
   }
 }

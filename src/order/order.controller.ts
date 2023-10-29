@@ -10,11 +10,15 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
-import { OrderService } from './order.service';
 import { CreateOrderDTO, UpdateOrderDTO } from './dtos/order.dto';
-import { UpdateProductDTO } from 'src/product/dto/product.dto';
+import { OrderService } from './order.service';
 
 @ApiSecurity('bearer')
 @UseGuards(JwtAuthGuard)
@@ -24,9 +28,12 @@ export class OrderController {
   constructor(private orderService: OrderService) {}
 
   @Post()
-  async createProduct(@Body() CreateOrderDTO: CreateOrderDTO) {
+  @ApiOperation({ summary: 'Cria um novo pedido' })
+  @ApiResponse({ status: 201, description: 'Pedido criado com sucesso' })
+  @ApiResponse({ status: 400, description: 'Erro na solicitação' })
+  async createProduct(@Body() createOrderDTO: CreateOrderDTO) {
     try {
-      const result = await this.orderService.createOrder(CreateOrderDTO);
+      const result = await this.orderService.createOrder(createOrderDTO);
       return result;
     } catch (error) {
       throw error;
@@ -34,6 +41,9 @@ export class OrderController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Recupera todos os pedidos' })
+  @ApiResponse({ status: 200, description: 'Pedidos recuperados com sucesso' })
+  @ApiResponse({ status: 400, description: 'Erro na solicitação' })
   async findAll(
     @Query('page') page: number = 1,
     @Query('pageSize') pageSize: number = 10,
@@ -46,6 +56,9 @@ export class OrderController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Recupera um pedido por ID' })
+  @ApiResponse({ status: 200, description: 'Pedido recuperado com sucesso' })
+  @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
   async findOne(@Param('id') id: string) {
     try {
       return await this.orderService.findOne(+id);
@@ -55,11 +68,17 @@ export class OrderController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Exclui um pedido por ID' })
+  @ApiResponse({ status: 204, description: 'Pedido excluído com sucesso' })
+  @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
   async deleteOrder(@Param('id') id: string) {
     return await this.orderService.deleteOrder(+id);
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Atualiza um pedido por ID' })
+  @ApiResponse({ status: 200, description: 'Pedido atualizado com sucesso' })
+  @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
   async updateOrder(
     @Param('id') id: string,
     @Body() updateOrderDTO: UpdateOrderDTO,
@@ -70,7 +89,7 @@ export class OrderController {
         updateOrderDTO,
       );
       if (!updateOrder) {
-        throw new NotFoundException(`Product with ID ${id} not found`);
+        throw new NotFoundException(`Pedido com ID ${id} não encontrado`);
       }
       return updateOrder;
     } catch (error) {
