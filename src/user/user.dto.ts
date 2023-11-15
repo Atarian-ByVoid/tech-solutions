@@ -1,7 +1,14 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsString, IsEmail, IsInt, IsNotEmpty, IsEnum } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
 import { OrderDTO } from 'src/order/dtos/order.dto';
 import { ProductReviewDTO } from 'src/product/dto/product-review.dto';
 
@@ -22,6 +29,7 @@ export class UserDTO {
 
   @ApiProperty()
   @IsString()
+  @IsStrongPassword()
   password: string;
 
   @ApiProperty()
@@ -50,11 +58,11 @@ export class CreateUserDTO extends OmitType(UserDTO, [
   'reviews',
   'orders',
   'id',
-  'role'
+  'role',
 ]) {}
 export class UpdateUserDTO extends OmitType(UserDTO, [
   'reviews',
   'orders',
   'id',
-  'role'
+  'role',
 ]) {}

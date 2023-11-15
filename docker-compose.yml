@@ -29,8 +29,8 @@ services:
       timeout: 15s
       retries: 5
     environment:
-      PGADMIN_DEFAULT_EMAIL: root@root.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_EMAIL: pecs@metric.com
+      PGADMIN_DEFAULT_PASSWORD: c^@H"KZsg9DMV{f;-}'pN/
 
 networks:
   default:

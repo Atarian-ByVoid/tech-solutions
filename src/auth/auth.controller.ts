@@ -8,7 +8,12 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'; // Importe as anotações necessárias
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger'; // Importe as anotações necessárias
 import { CreateUserDTO } from 'src/user/user.dto';
 import { AuthUserDTO, UpdateRoleDTO } from './auth.dto';
 import { AuthService } from './auth.service';
@@ -46,6 +51,7 @@ export class AuthController {
   }
 
   @Put(':id/update-role')
+  @ApiSecurity('bearer')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Atualiza a função de um usuário por ID' })
   @ApiResponse({
